@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VRM Pose & Expression Modeler</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #1a1a1a; font-family: sans-serif; color: white; }
+        #canvas-container { width: 100vw; height: 100vh; display: block; }
+        
+        #ui-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 350px;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            overflow-y: auto;
+            padding: 15px;
+            box-sizing: border-box;
+            border-left: 1px solid #333;
+        }
+
+        h1 { font-size: 1.2rem; margin-top: 0; text-align: center; color: #6366f1; }
+        h2 { font-size: 1rem; margin-top: 20px; border-bottom: 1px solid #444; padding-bottom: 5px; color: #ddd; }
+        h3 { font-size: 0.9rem; margin-top: 10px; color: #aaa; }
+
+        .control-group { margin-bottom: 15px; border: 1px solid #333; padding: 10px; border-radius: 5px; background: rgba(255,255,255,0.02); }
+        .control-group label { display: block; font-size: 0.8rem; margin-bottom: 5px; color: #aaa; }
+        .control-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+        .control-row span { width: 15px; font-size: 0.8rem; color: #888; }
+        input[type=range] { flex: 1; accent-color: #6366f1; }
+        input[type=number] { width: 50px; background: #222; border: 1px solid #444; color: white; border-radius: 3px; font-size: 0.8rem; padding: 2px; }
+
+        .bone-selector {
+            width: 100%;
+            padding: 8px;
+            background: #222;
+            color: white;
+            border: 1px solid #444;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #4f46e5; }
+        .btn-secondary { background: #333; margin-top: 5px; }
+        .btn-secondary:hover { background: #444; }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            background: #111;
+            border: 1px solid #333;
+            color: #0f0;
+            font-family: monospace;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            resize: vertical;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        #loading {
+            position: absolute;
+            inset: 0;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.5s;
+        }
+
+        /* Expression specific styles */
+        .expression-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .expression-label {
+            width: 80px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #ccc;
+        }
+        #expression-list {
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid #333;
+            padding: 10px;
+            border-radius: 4px;
+            background: rgba(0,0,0,0.3);
+        }
+        #expression-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        #expression-list::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 3px;
+        }
+    </style>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/",
+        "@pixiv/three-vrm": "https://cdn.jsdelivr.net/npm/@pixiv/three-vrm@3/lib/three-vrm.module.min.js"
+      }
+    }
+    </script>
+</head>
+<body>
+    <div id="loading">LOADING MODEL...</div>
+
+    <div id="canvas-container"></div>
+
+    <div id="ui-container">
+        <h1>Pose & Expressions</h1>
+        
+        <h2>Bone Control</h2>
+        <div>
+            <label>Select Bone:</label>
+            <select id="bone-select" class="bone-selector">
+                <option value="">Select a bone...</option>
+            </select>
+        </div>
+
+        <div id="controls-area" style="display:none;">
+            <h3>Rotation (Radians)</h3>
+            <div class="control-group">
+                <div class="control-row">
+                    <span>X</span>
+                    <input type="range" id="rot-x" min="-3.14" max="3.14" step="0.01" value="0">
+                    <input type="number" id="val-rot-x" step="0.01" value="0">
+                </div>
+                <div class="control-row">
+                    <span>Y</span>
+                    <input type="range" id="rot-y" min="-3.14" max="3.14" step="0.01" value="0">
+                    <input type="number" id="val-rot-y" step="0.01" value="0">
+                </div>
+                <div class="control-row">
+                    <span>Z</span>
+                    <input type="range" id="rot-z" min="-3.14" max="3.14" step="0.01" value="0">
+                    <input type="number" id="val-rot-z" step="0.01" value="0">
+                </div>
+            </div>
+
+            <h3>Position (Offset)</h3>
+            <div class="control-group">
+                <div class="control-row">
+                    <span>X</span>
+                    <input type="range" id="pos-x" min="-1" max="1" step="0.01" value="0">
+                    <input type="number" id="val-pos-x" step="0.01" value="0">
+                </div>
+                <div class="control-row">
+                    <span>Y</span>
+                    <input type="range" id="pos-y" min="-1" max="1" step="0.01" value="0">
+                    <input type="number" id="val-pos-y" step="0.01" value="0">
+                </div>
+                <div class="control-row">
+                    <span>Z</span>
+                    <input type="range" id="pos-z" min="-1" max="1" step="0.01" value="0">
+                    <input type="number" id="val-pos-z" step="0.01" value="0">
+                </div>
+            </div>
+            
+            <button class="btn btn-secondary" id="reset-bone">Reset This Bone</button>
+        </div>
+
+        <h2>Expressions</h2>
+        <div id="expression-list">
+            <!-- Dynamic sliders generated here -->
+            <div style="text-align: center; color: #666; padding: 10px;">Loading expressions...</div>
+        </div>
+        <button class="btn btn-secondary" id="reset-expressions">Reset Expressions</button>
+
+        <h2>IO / Export</h2>
+        <button class="btn" id="generate-code">Generate Pose Code</button>
+        <textarea id="io-area" placeholder="Paste pose JSON here or click Generate..."></textarea>
+        <button class="btn btn-secondary" id="apply-code">Apply from Text</button>
+        <button class="btn btn-secondary" id="reset-all" style="background: #ef4444;">Reset All</button>
+    </div>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { VRMLoaderPlugin, VRMUtils, VRMHumanBoneName } from '@pixiv/three-vrm';
+
+const MODEL_URL = 'https://raw.githubusercontent.com/Ren23449-ux/Ai-anime-agent-vrm/main/6293260033275226542.vrm';
+
+let scene, camera, renderer, currentVrm;
+let currentPoseState = {}; // Stores modifications { boneName: { rotation: {x,y,z}, position: {x,y,z} } }
+let currentExpressionState = {}; // Stores expressions { expressionName: value }
+let boneVisualizers = {}; // Map of boneName -> Mesh (Green Dot)
+let raycaster = new THREE.Raycaster();
+let pointer = new THREE.Vector2();
+
+// Setup Elements
+const boneSelect = document.getElementById('bone-select');
+const controlsArea = document.getElementById('controls-area');
+const ioArea = document.getElementById('io-area');
+const expressionList = document.getElementById('expression-list');
+
+// Inputs
+const inputs = {
+    rot: {
+        x: document.getElementById('rot-x'),
+        y: document.getElementById('rot-y'),
+        z: document.getElementById('rot-z')
+    },
+    pos: {
+        x: document.getElementById('pos-x'),
+        y: document.getElementById('pos-y'),
+        z: document.getElementById('pos-z')
+    },
+    valRot: {
+        x: document.getElementById('val-rot-x'),
+        y: document.getElementById('val-rot-y'),
+        z: document.getElementById('val-rot-z')
+    },
+    valPos: {
+        x: document.getElementById('val-pos-x'),
+        y: document.getElementById('val-pos-y'),
+        z: document.getElementById('val-pos-z')
+    }
+};
+
+function init() {
+    const container = document.getElementById('canvas-container');
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    container.appendChild(renderer.domElement);
+
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x222222);
+
+    // Grid Helper
+    const gridHelper = new THREE.GridHelper(10, 10);
+    scene.add(gridHelper);
+
+    // Camera
+    camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(0, 1.4, 3.0);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 1.0, 0);
+    controls.update();
+
+    // Lights
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    dirLight.position.set(1, 2, 3);
+    scene.add(dirLight);
+    const ambLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambLight);
+
+    loadVRM(MODEL_URL);
+    
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    window.addEventListener('pointerdown', onPointerDown);
+
+    setupUIListeners();
+    animate();
+}
+
+function onPointerDown(event) {
+    pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+    pointer.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+    raycaster.setFromCamera(pointer, camera);
+
+    const visualizers = Object.values(boneVisualizers);
+    const intersects = raycaster.intersectObjects(visualizers);
+
+    if (intersects.length > 0) {
+        const object = intersects[0].object;
+        const boneName = Object.keys(boneVisualizers).find(key => boneVisualizers[key] === object);
+        
+        if (boneName) {
+            boneSelect.value = boneName;
+            boneSelect.dispatchEvent(new Event('change'));
+        }
+    }
+}
+
+function createBoneVisualizer(boneName, node) {
+    const geometry = new THREE.SphereGeometry(0.005, 8, 8);
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, depthTest: false, transparent: true, opacity: 0.8 });
+    const sphere = new THREE.Mesh(geometry, material);
+    node.add(sphere);
+    boneVisualizers[boneName] = sphere;
+    return sphere;
+}
+
+function loadVRM(url) {
+    const loader = new GLTFLoader();
+    loader.register((parser) => new VRMLoaderPlugin(parser));
+    loader.load(url, (gltf) => {
+        const vrm = gltf.userData.vrm;
+        VRMUtils.removeUnnecessaryVertices(gltf.scene);
+        VRMUtils.combineSkeletons(gltf.scene);
+        currentVrm = vrm;
+        scene.add(vrm.scene);
+        vrm.scene.rotation.y = Math.PI;
+
+        Object.values(VRMHumanBoneName).forEach(boneName => {
+            const rawNode = vrm.humanoid.getRawBoneNode(boneName);
+            if (rawNode) {
+                rawNode.userData.initialPosition = rawNode.position.clone();
+                createBoneVisualizer(boneName, rawNode);
+            }
+        });
+
+        populateBoneSelector();
+        populateExpressionUI();
+        
+        document.getElementById('loading').style.display = 'none';
+    });
+}
+
+function populateBoneSelector() {
+    const bones = Object.values(VRMHumanBoneName);
+    bones.sort();
+    
+    bones.forEach(boneName => {
+        const node = currentVrm.humanoid.getNormalizedBoneNode(boneName);
+        if (node) {
+            const option = document.createElement('option');
+            option.value = boneName;
+            option.textContent = boneName;
+            boneSelect.appendChild(option);
+        }
+    });
+}
+
+function populateExpressionUI() {
+    expressionList.innerHTML = '';
+    
+    if (!currentVrm || !currentVrm.expressionManager) return;
+
+    const expressions = currentVrm.expressionManager.expressionMap;
+    // Get keys and sort them
+    const keys = Object.keys(expressions).sort();
+
+    keys.forEach(name => {
+        const row = document.createElement('div');
+        row.className = 'expression-row';
+
+        const label = document.createElement('div');
+        label.className = 'expression-label';
+        label.textContent = name;
+        label.title = name;
+
+        const range = document.createElement('input');
+        range.type = 'range';
+        range.min = '0';
+        range.max = '1';
+        range.step = '0.01';
+        range.value = '0';
+        
+        const number = document.createElement('input');
+        number.type = 'number';
+        number.min = '0';
+        number.max = '1';
+        number.step = '0.01';
+        number.value = '0';
+
+        // Sync logic
+        range.addEventListener('input', () => {
+            number.value = range.value;
+            updateExpression(name, parseFloat(range.value));
+        });
+        
+        number.addEventListener('input', () => {
+            range.value = number.value;
+            updateExpression(name, parseFloat(number.value));
+        });
+
+        row.appendChild(label);
+        row.appendChild(range);
+        row.appendChild(number);
+        expressionList.appendChild(row);
+        
+        // Store reference for resetting later if needed, 
+        // essentially we are binding 'name' via closure here
+        currentExpressionState[name] = 0;
+    });
+}
+
+function updateExpression(name, value) {
+    if (!currentVrm) return;
+    currentVrm.expressionManager.setValue(name, value);
+    currentExpressionState[name] = value;
+}
+
+function setupUIListeners() {
+    boneSelect.addEventListener('change', (e) => {
+        const boneName = e.target.value;
+        if (!boneName) {
+            controlsArea.style.display = 'none';
+            return;
+        }
+        
+        controlsArea.style.display = 'block';
+        updateControlsFromBone();
+        
+        Object.values(boneVisualizers).forEach(mesh => {
+             mesh.material.color.set(0x00ff00);
+             mesh.scale.set(1,1,1);
+        });
+        if (boneVisualizers[boneName]) {
+            boneVisualizers[boneName].material.color.set(0xff0000);
+            boneVisualizers[boneName].scale.set(1.5,1.5,1.5);
+        }
+    });
+
+    function bindInput(type, axis) {
+        const range = inputs[type][axis];
+        const number = inputs['val' + (type === 'rot' ? 'Rot' : 'Pos')][axis];
+
+        range.addEventListener('input', () => {
+            number.value = range.value;
+            updateBoneFromControls();
+        });
+        number.addEventListener('input', () => {
+            range.value = number.value;
+            updateBoneFromControls();
+        });
+    }
+
+    ['x', 'y', 'z'].forEach(axis => {
+        bindInput('rot', axis);
+        bindInput('pos', axis);
+    });
+
+    document.getElementById('reset-bone').addEventListener('click', () => {
+        if (!boneSelect.value) return;
+        const boneName = boneSelect.value;
+        
+        if (currentPoseState[boneName]) delete currentPoseState[boneName];
+
+        ['x', 'y', 'z'].forEach(axis => {
+            inputs.rot[axis].value = 0;
+            inputs.valRot[axis].value = 0;
+            inputs.pos[axis].value = 0;
+            inputs.valPos[axis].value = 0;
+        });
+
+        const normNode = currentVrm.humanoid.getNormalizedBoneNode(boneName);
+        const rawNode = currentVrm.humanoid.getRawBoneNode(boneName);
+
+        if (normNode) normNode.rotation.set(0, 0, 0);
+        if (rawNode && rawNode.userData.initialPosition) {
+            rawNode.position.copy(rawNode.userData.initialPosition);
+        }
+    });
+
+    document.getElementById('reset-expressions').addEventListener('click', () => {
+        if (!currentVrm) return;
+        // Reset all expression values to 0
+        Object.keys(currentExpressionState).forEach(name => {
+             currentVrm.expressionManager.setValue(name, 0);
+             currentExpressionState[name] = 0;
+        });
+        
+        // Update UI inputs
+        const rows = expressionList.getElementsByClassName('expression-row');
+        for(let row of rows) {
+            const inputs = row.getElementsByTagName('input');
+            for(let input of inputs) input.value = 0;
+        }
+    });
+
+    document.getElementById('generate-code').addEventListener('click', generateCode);
+    document.getElementById('apply-code').addEventListener('click', applyCode);
+    
+    document.getElementById('reset-all').addEventListener('click', () => {
+        if(confirm("Reset all bones and expressions to neutral?")) {
+            currentPoseState = {};
+            currentVrm.humanoid.resetPose();
+            
+            Object.values(VRMHumanBoneName).forEach(boneName => {
+                const rawNode = currentVrm.humanoid.getRawBoneNode(boneName);
+                if (rawNode && rawNode.userData.initialPosition) {
+                    rawNode.position.copy(rawNode.userData.initialPosition);
+                }
+            });
+
+            // Reset Expressions
+            document.getElementById('reset-expressions').click();
+
+            boneSelect.value = "";
+            controlsArea.style.display = "none";
+            
+             Object.values(boneVisualizers).forEach(mesh => {
+                 mesh.material.color.set(0x00ff00);
+                 mesh.scale.set(1,1,1);
+            });
+        }
+    });
+}
+
+function updateControlsFromBone() {
+    const boneName = boneSelect.value;
+    if (!boneName) return;
+
+    const normNode = currentVrm.humanoid.getNormalizedBoneNode(boneName);
+    const rawNode = currentVrm.humanoid.getRawBoneNode(boneName);
+    
+    if (!normNode || !rawNode) return;
+
+    const rot = normNode.rotation;
+    const pos = rawNode.position;
+    const initialPos = rawNode.userData.initialPosition || new THREE.Vector3();
+    
+    const posOffset = pos.clone().sub(initialPos);
+
+    inputs.rot.x.value = inputs.valRot.x.value = rot.x.toFixed(3);
+    inputs.rot.y.value = inputs.valRot.y.value = rot.y.toFixed(3);
+    inputs.rot.z.value = inputs.valRot.z.value = rot.z.toFixed(3);
+
+    inputs.pos.x.value = inputs.valPos.x.value = posOffset.x.toFixed(3);
+    inputs.pos.y.value = inputs.valPos.y.value = posOffset.y.toFixed(3);
+    inputs.pos.z.value = inputs.valPos.z.value = posOffset.z.toFixed(3);
+}
+
+function updateBoneFromControls() {
+    const boneName = boneSelect.value;
+    if (!boneName) return;
+
+    const normNode = currentVrm.humanoid.getNormalizedBoneNode(boneName);
+    const rawNode = currentVrm.humanoid.getRawBoneNode(boneName);
+    
+    if (!normNode || !rawNode) return;
+
+    const rx = parseFloat(inputs.rot.x.value);
+    const ry = parseFloat(inputs.rot.y.value);
+    const rz = parseFloat(inputs.rot.z.value);
+
+    const px = parseFloat(inputs.pos.x.value);
+    const py = parseFloat(inputs.pos.y.value);
+    const pz = parseFloat(inputs.pos.z.value);
+
+    const initialPos = rawNode.userData.initialPosition || new THREE.Vector3();
+
+    normNode.rotation.set(rx, ry, rz);
+    
+    rawNode.position.set(
+        initialPos.x + px,
+        initialPos.y + py,
+        initialPos.z + pz
+    );
+
+    currentVrm.humanoid.update();
+
+    if (!currentPoseState[boneName]) currentPoseState[boneName] = {};
+    
+    currentPoseState[boneName] = {
+        rotation: { x: rx, y: ry, z: rz },
+        position: { x: px, y: py, z: pz }
+    };
+}
+
+function generateCode() {
+    const output = {};
+    
+    // Process Bones
+    Object.keys(currentPoseState).forEach(name => {
+        const data = currentPoseState[name];
+        const cleanData = {};
+        
+        if (data.rotation) {
+            if (Math.abs(data.rotation.x) > 0.001 || Math.abs(data.rotation.y) > 0.001 || Math.abs(data.rotation.z) > 0.001) {
+                cleanData.rotation = data.rotation;
+            }
+        }
+        
+        if (data.position) {
+            if (Math.abs(data.position.x) > 0.001 || Math.abs(data.position.y) > 0.001 || Math.abs(data.position.z) > 0.001) {
+                cleanData.position = data.position;
+            }
+        }
+
+        if (cleanData.rotation || cleanData.position) {
+            output[name] = cleanData;
+        }
+    });
+
+    // Process Expressions
+    const expressionsOut = {};
+    let hasExpressions = false;
+    Object.keys(currentExpressionState).forEach(name => {
+        const val = currentExpressionState[name];
+        if (val > 0.01) {
+             expressionsOut[name] = val;
+             hasExpressions = true;
+        }
+    });
+    
+    if (hasExpressions) {
+        output["expressions"] = expressionsOut;
+    }
+
+    if (Object.keys(output).length === 0) {
+        ioArea.value = "// No changes detected.";
+        return;
+    }
+
+    const jsonString = JSON.stringify(output, null, 4);
+    ioArea.value = `// Paste this into your poseLibrary:\n"my_new_pose": ${jsonString},`;
+}
+
+function applyCode() {
+    try {
+        let raw = ioArea.value.trim();
+        // Simple heuristic to fix naked JSON
+        if (raw.indexOf(':') > -1 && raw.trim().startsWith('"')) {
+             raw = `{${raw}}`;
+        }
+        if (raw.endsWith(',')) raw = raw.slice(0, -1);
+        
+        // Security check
+        if (raw.includes('function') || raw.includes('=>')) {
+            alert("Invalid pose data");
+            return;
+        }
+        
+        let parsed = new Function(`return ${raw}`)();
+
+        // Handle wrapped object case "pose": { ... }
+        if (Object.keys(parsed).length === 1 && typeof Object.values(parsed)[0] === 'object') {
+            const firstKey = Object.keys(parsed)[0];
+            const firstVal = parsed[firstKey];
+             // Check if it looks like a pose object (has bones or expressions)
+             if (!firstVal.rotation && !firstVal.position && !firstVal.x) {
+                 parsed = firstVal;
+            }
+        }
+
+        // --- RESET EVERYTHING ---
+        currentPoseState = {}; 
+        currentVrm.humanoid.resetPose();
+        document.getElementById('reset-expressions').click();
+        
+        // Reset Raw Bones
+        Object.values(VRMHumanBoneName).forEach(boneName => {
+            const rawNode = currentVrm.humanoid.getRawBoneNode(boneName);
+            if (rawNode && rawNode.userData.initialPosition) {
+                rawNode.position.copy(rawNode.userData.initialPosition);
+            }
+        });
+
+        // --- APPLY PARSED DATA ---
+        Object.entries(parsed).forEach(([key, data]) => {
+            
+            // Special case: Expressions
+            if (key === 'expressions') {
+                Object.entries(data).forEach(([expName, val]) => {
+                    updateExpression(expName, val);
+                    // Update UI Slider
+                    // Find the row with this label
+                    const labels = Array.from(document.getElementsByClassName('expression-label'));
+                    const label = labels.find(l => l.textContent === expName);
+                    if (label) {
+                        const inputs = label.parentElement.getElementsByTagName('input');
+                        for(let inp of inputs) inp.value = val;
+                    }
+                });
+                return;
+            }
+
+            // Normal Bones
+            const normNode = currentVrm.humanoid.getNormalizedBoneNode(key);
+            const rawNode = currentVrm.humanoid.getRawBoneNode(key);
+
+            if (normNode && rawNode) {
+                let rot = { x:0, y:0, z:0 };
+                let pos = { x:0, y:0, z:0 };
+
+                if (data.rotation) rot = data.rotation;
+                else if (data.x !== undefined) rot = data; // Handle simple {x,y,z} format
+
+                if (data.position) pos = data.position;
+
+                normNode.rotation.set(rot.x || 0, rot.y || 0, rot.z || 0);
+
+                const initialPos = rawNode.userData.initialPosition || new THREE.Vector3();
+                rawNode.position.set(
+                    initialPos.x + (pos.x || 0),
+                    initialPos.y + (pos.y || 0),
+                    initialPos.z + (pos.z || 0)
+                );
+
+                currentPoseState[key] = {
+                    rotation: { x: rot.x||0, y: rot.y||0, z: rot.z||0 },
+                    position: { x: pos.x||0, y: pos.y||0, z: pos.z||0 }
+                };
+            }
+        });
+
+        if (boneSelect.value) {
+            updateControlsFromBone();
+        }
+        
+        // Force update immediately
+        currentVrm.humanoid.update();
+        currentVrm.expressionManager.update();
+
+        alert("Pose & Expressions applied!");
+
+    } catch (e) {
+        console.error(e);
+        alert("Error parsing pose data.");
+    }
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+    if (currentVrm) {
+        currentVrm.update(0.016);
+    }
+    renderer.render(scene, camera);
+}
+
+init();
+
+</script>
+</body>
+</html>
