@@ -2,16 +2,31 @@
 "neutral": {
     "leftUpperArm": {
         "rotation": {
-            "x": 0.1,
-            "y": 1,
+            "x": -0.31,
+            "y": -0.6,
+            "z": 1.39
+        }
+    },
+    "leftLowerArm": {
+        "rotation": {
+            "x": -0.89,
+            "y": -1.09,
             "z": -1.36
         },
         "position": {
-            "x": 0.01,
-            "y": 0.03,
-            "z": -0.01
+            "x": -0.01,
+            "y": 0,
+            "z": 0
         }
     },
+    "rightUpperArm": {
+        "rotation": {
+            "x": 0.12,
+            "y": -0.06,
+            "z": -1.34
+        }
+    }
+},
     "rightUpperArm": {
         "rotation": {
             "x": 0.3,
