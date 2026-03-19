@@ -1,0 +1,693 @@
+Are there 34,000 human emotions? wellllll MAYBE BUT DO I HAVE THE TIME TO CODE ALLLLLLLLL THAT OHHHH HELLLLLL NAHHH SO IM GOING TO ALOT ANY WAY SOOO THIS IS THE LIST
+There are around { In basic emotions around 27 wich is more managable  }
+
+EMOTIONS CHECKLIST
+[check box] 
+[1] Determination.
+[2] Shy
+[3] Wave
+[4] Neutral
+[5] Excited
+[6] Annoyed
+
+
+
+
+Emotions Needed List (for help animations)
+======================
+
+Abandonment
+Acceptance
+Admiration
+Adoration
+Affection
+Alienation
+Amazement
+Ambivalence
+Amusement
+Anger
+Annoyance
+Anticipation
+Anxiety
+Apathy
+Arrogance
+Attachment
+Attraction
+Awe
+Awkwardness
+Belonging
+Betrayal
+Bitterness
+Bittersweetness
+Boredom
+Calm
+Catharsis
+Closeness
+Compassion
+Compliance
+Condemnation
+Confidence
+Conflicted
+Confusion
+Connection
+Contempt
+Contentment
+Craving
+Curiosity
+Defeat
+Defiance
+Desire
+Despair
+Desperation
+Detachment
+Determination
+Devotion
+Disbelief
+Disgust
+Disrespect
+Distrust
+Dread
+Ego
+Elation
+Embarrassment
+Empathy
+Emptiness
+Envy
+Euphoria
+Excitement
+Existential dread
+Fascination
+Fear
+Fixation
+Fondness
+Forgiveness
+Frustration
+Fulfillment
+Fury
+Gratitude
+Grief
+Guilt
+Happiness
+Hatred
+Helplessness
+Homesickness
+Hope
+Hopefulness
+Hopelessness
+Humiliation
+Humility
+Impatience
+Inadequacy
+Indecision
+Indifference
+Indignation
+Infatuation
+Insecurity
+Insignificance
+Inspiration
+Interest
+Intimacy
+Intrigue
+Invalidation
+Irritation
+Isolation
+Jealousy
+Joy
+Judgment
+Kindness
+Loathing
+Loneliness
+Longing
+Lostness
+Love
+Loyalty
+Meaningfulness
+Meaninglessness
+Melancholy
+Mercy
+Mistrust
+Moral outrage
+Motivation
+Nostalgia
+Numbness
+Obsession
+Optimism
+Overwhelm
+Panic
+Paranoia
+Peace
+Powerlessness
+Pride
+Purpose
+Rage
+Rebellion
+Regret
+Rejection
+Release
+Relief
+Remorse
+Resentment
+Resignation
+Resilience
+Respect
+Restlessness
+Reverence
+Revulsion
+Righteousness
+Sadness
+Satisfaction
+Self-consciousness
+Self-doubt
+Self-hatred
+Self-love
+Serenity
+Shame
+Shock
+Solidarity
+Sorrow
+Stress
+Submission
+Surprise
+Suspense
+Suspicion
+Sympathy
+Tenderness
+Tension
+Terror
+Transcendence
+Trust
+Uncertainty
+Validation
+Vulnerability
+Warmth
+Wonder
+Worry
+Worthlessness
+Yearning
+
+
+
+Here's the expanded form
+500 Human Emotions and Affective States
+=====================================
+
+Abandonment
+Absorption
+Absurdity
+Acceptance
+Acedia
+Admiration
+Adoration
+Adronitis
+Affection
+Agony
+Alertness
+Alienation
+Alienness
+Altruism
+Altschmerz
+Ambivalence
+Amusement
+Anecdoche
+Anemoia
+Anger
+Angriness
+Anguish
+Annoyance
+Anticipation
+Anticipatory anxiety
+Anxiety
+Anxious anticipation
+Apathy
+Appreciation
+Arrogance
+Assertiveness
+Attachment
+Attraction
+Authenticity
+Awareness
+Awe
+Awkwardness
+Belonging
+Benevolence
+Betrayal
+Bitterness
+Bittersweetness
+Bliss
+Bonding
+Boredom
+Burning anger
+Butterflies
+Calm
+Catharsis
+Certainty
+Cheerfulness
+Cheerlessness
+Chrysalism
+Clarity
+Closeness
+Cold resentment
+Comfort
+Compassion
+Compassion fatigue
+Composure
+Condemnation
+Confidence
+Confusion
+Connection
+Contemplation
+Contempt
+Contentment
+Coolness
+Cosmic awe
+Cruelty
+Crush
+Curiosity
+Deep Abandonment
+Deep Absorption
+Deep Absurdity
+Deep Acceptance
+Deep Acedia
+Deep Admiration
+Deep Adoration
+Deep Adronitis
+Deep Affection
+Deep Agony
+Deep Alertness
+Deep Alienation
+Deep Alienness
+Deep Altruism
+Deep Altschmerz
+Deep Ambivalence
+Deep Amusement
+Deep Anecdoche
+Deep Anemoia
+Deep Anger
+Deep Angriness
+Deep Anguish
+Deep Annoyance
+Deep Anticipation
+Deep Anticipatory anxiety
+Deep Anxiety
+Deep Anxious anticipation
+Deep Apathy
+Deep Appreciation
+Deep Arrogance
+Deep Assertiveness
+Deep Attachment
+Deep Attraction
+Deep Authenticity
+Deep Awareness
+Deep Awe
+Deep Awkwardness
+Deep Belonging
+Deep Benevolence
+Deep Betrayal
+Deep Bitterness
+Deep Bittersweetness
+Deep Bliss
+Deep Bonding
+Deep Boredom
+Deep Burning anger
+Deep Butterflies
+Deep Calm
+Deep Catharsis
+Deep Certainty
+Deep Cheerfulness
+Deep Cheerlessness
+Deep Chrysalism
+Deep Clarity
+Deep Closeness
+Deep Cold resentment
+Deep Comfort
+Deep Compassion
+Deep Compassion fatigue
+Deep Composure
+Deep Condemnation
+Deep Confidence
+Deep Confusion
+Deep Connection
+Deep Contemplation
+Deep Contempt
+Deep Contentment
+Deep Coolness
+Deep Cosmic awe
+Deep Cruelty
+Deep Crush
+Deep Curiosity
+Deep Defeat
+Deep Delight
+Deep Dependence
+Deep Desire
+Deep Desolation
+Deep Despair
+Deep Desperation
+Deep Detachment
+Deep Determination
+Deep Devotion
+Deep Disappointment
+Deep Discomfort
+Deep Discontent
+Deep Disgust
+Deep Disrespect
+Deep Dissatisfaction
+Deep Distance
+Deep Distraction
+Deep Distress
+Deep Distrust
+Deep Dominance
+Deep Doubt
+Deep Dread
+Deep Ease
+Deep Egoism
+Deep Elation
+Deep Ellipsism
+Deep Embarrassment
+Deep Embodiedness
+Deep Emotional flatness
+Deep Emotional neutrality
+Deep Empathy
+Deep Empowerment
+Deep Emptiness
+Deep Enthusiasm
+Deep Envy
+Deep Epiphany
+Deep Equanimity
+Deep Euphoria
+Deep Excitement
+Deep Exclusion
+Deep Existential anxiety
+Deep Existential dread
+Deep Existential hope
+Deep Exulansis
+Deep FOMO
+Deep Fascination
+Deep Fear
+Deep Fearfulness
+Deep Finitude
+Deep Fixation
+Deep Flow
+Deep Focus
+Deep Fondness
+Deep Forbearance
+Deep Forgetfulness
+Deep Forgiveness
+Deep Fragile hope
+Deep Freedom
+Deep Frustration
+Deep Fulfillment
+Deep Fury
+Deep Generosity
+Deep Gentle sadness
+Deep Glee
+Deep Gratitude
+Deep Grief
+Deep Groundedness
+Deep Groundlessness
+Deep Guilt
+Deep Happiness
+Deep Harmony
+Deep Hatred
+Deep Heartbreak
+Deep Heaviness
+Deep Helplessness
+Deep Hollow despair
+Deep Hope
+Deep Hopefulness
+Deep Hopelessness
+Deep Hospitality
+Deep Humiliation
+Deep Humility
+Deep Iktsuarpok
+Deep Impatience
+Deep Imposter syndrome
+Deep Inadequacy
+Deep Inclusion
+Deep Indecision
+Deep Independence
+Deep Indifference
+Deep Indignation
+Deep Infatuation
+Deep Inferiority
+Deep Injustice
+Deep Insecurity
+Deep Insight
+Deep Insignificance
+Deep Inspiration
+Deep Interest
+Deep Intimacy
+Deep Intrigue
+Deep Invalidation
+Deep Irritation
+Deep Isolation
+Deep JOMO
+Deep Jealousy
+Deep Jitteriness
+Deep Joy
+Deep Joyfulness
+Deep Judgment
+Deep Justice
+Deep Kenopsia
+Deep Kindheartedness
+Deep Kindness
+Deep Kuebiko
+Deep Liberosis
+Deep Lightness
+Deep Limerence
+Deep Loathing
+Deep Loneliness
+Deep Lonely longing
+Deep Longing
+Deep Lostness
+Deep Love
+Deep Loyalty
+Deep Malevolence
+Deep Meaningfulness
+Deep Meaninglessness
+Deep Meditativeness
+Deep Melancholy
+Deep Mercy
+Deep Mindfulness
+Deep Misery
+Deep Misunderstanding
+Deep Mono no aware
+Deep Moral certainty
+Deep Moral doubt
+Deep Moral outrage
+Deep Mortality awareness
+Deep Motivation
+Deep Neglect
+Deep Neutrality
+Deep Nostalgia
+Deep Numbness
+Deep Obsession
+Deep Occhiolism
+Deep Onism
+Deep Optimism
+Deep Overwhelm
+Deep Panic
+Deep Paranoia
+Deep Patience
+Deep Peace
+Deep Peaceful acceptance
+Deep Pessimism
+Deep Playfulness
+Deep Possessiveness
+Deep Powerlessness
+Deep Preoccupation
+Deep Pressure
+Deep Pride
+Deep Pridefulness
+Deep Protectiveness
+Deep Purpose
+Deep Quiet joy
+Deep Rage
+Deep Realization
+Deep Reassurance
+Deep Recognition
+Deep Reflection
+Deep Regret
+Deep Rejection
+Deep Relaxation
+Deep Release
+Deep Reliance
+Deep Relief
+Deep Remorse
+Deep Renewal
+Deep Resentment
+Deep Reserve
+Deep Resignation
+Deep Resilience
+Deep Respect
+Deep Restful calm
+Deep Restlessness
+Deep Reverence
+Deep Revulsion
+Deep Righteousness
+Deep Rubatosis
+Deep Rumination
+Deep Sadness
+Deep Satisfaction
+Deep Saudade
+Deep Schadenfreude
+Deep Security
+Deep Self-acceptance
+Deep Self-assurance
+Deep Self-consciousness
+Deep Self-doubt
+Deep Self-hatred
+Deep Self-loathing
+Deep Self-love
+Deep Self-rejection
+Deep Serenity
+Deep Shame
+Deep Shamefulness
+Deep Sharp grief
+Deep Shatteredness
+Deep Sinking feeling
+Deep Soft contentment
+Deep Solidarity
+Deep Sonder
+Deep Sorrow
+Deep Stillness
+Deep Stoicism
+Deep Stress
+Deep Submission
+Deep Surprise
+Deep Suspense
+Deep Suspicion
+Deep Sympathy
+Deep Tenderness
+Deep Tense excitement
+Deep Tension
+Deep Terror
+Deep Tightness
+Deep Timelessness
+Deep Togetherness
+Deep Tolerance
+Deep Transcendence
+Deep Triumph
+Deep Trust
+Deep Trustfulness
+Deep Uncertainty
+Deep Understanding
+Deep Unity
+Deep Validation
+Deep Vemodalen
+Deep Victory
+Deep Vindication
+Deep Vulnerability
+Deep Warm affection
+Deep Warmth
+Deep Weltschmerz
+Deep Wonder
+Deep Wonderment
+Deep Worry
+Deep Worthlessness
+Deep Yearning
+Deep Zenosyne
+Defeat
+Delight
+Dependence
+Desire
+Desolation
+Despair
+Desperation
+Detachment
+Determination
+Devotion
+Disappointment
+Discomfort
+Discontent
+Disgust
+Disrespect
+Dissatisfaction
+Distance
+Distraction
+Distress
+Distrust
+Dominance
+Doubt
+Dread
+Ease
+Egoism
+Elation
+Ellipsism
+Embarrassment
+Embodiedness
+Emotional flatness
+Emotional neutrality
+Empathy
+Empowerment
+Emptiness
+Enthusiasm
+Envy
+Epiphany
+Equanimity
+Euphoria
+Excitement
+Exclusion
+Existential anxiety
+Existential dread
+Existential hope
+Exulansis
+FOMO
+Fascination
+Fear
+Fearfulness
+Finitude
+Fixation
+Flow
+Focus
+Fondness
+Forbearance
+Forgetfulness
+Forgiveness
+Fragile hope
+Freedom
+Frustration
+Fulfillment
+Fury
+Generosity
+Gentle sadness
+Glee
+Gratitude
+Grief
+Groundedness
+Groundlessness
+Guilt
+Happiness
+Harmony
+Hatred
+Heartbreak
+Heaviness
+Helplessness
+Hollow despair
+Hope
+Hopefulness
+Hopelessness
+Hospitality
+Humiliation
+Humility
+Iktsuarpok
+Impatience
+Imposter syndrome
+Inadequacy
+Inclusion
+Indecision
+Independence
+Indifference
+Indignation
+Infatuation
+Inferiority
+Injustice
+Insecurity
+Insight
+Insignificance
+Inspiration
+Intense Abandonment
+Intense Absorption
+Intense Absurdity
+Intense Acceptance
+Intense Acedia
+Intense Admiration
